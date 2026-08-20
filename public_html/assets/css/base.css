@@ -1,0 +1,36 @@
+/*
+  Temel global stiller — reset + tipografi altyapısı.
+  Component/layout/page bazlı stiller ileriki frontend aşamalarında eklenecek.
+*/
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: var(--color-bg);
+    color: var(--color-text-body);
+    font-family: var(--font-body);
+    font-size: var(--fs-body);
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    color: var(--color-text-heading);
+    line-height: 1.2;
+    margin: 0 0 var(--space-2);
+    overflow-wrap: break-word;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+a {
+    color: inherit;
+}

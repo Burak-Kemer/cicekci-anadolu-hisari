@@ -1,0 +1,74 @@
+/*
+  Design tokens — onaylanan tasarım sistemine (Bölüm 16) göre.
+  İleriki aşamalarda component/layout CSS'leri bu değişkenleri kullanacak.
+  Değerler burada TEK noktadan güncellenir.
+*/
+
+:root {
+    /* Renkler */
+    --color-bg: #FAF7F2;
+    --color-bg-alt: #FFFFFF;
+    --color-bg-deep: #2F3D2C;
+    --color-accent-blush: #B9838C;
+    --color-accent-gold: #B08D57;
+    --color-accent-sage: #A8B79E;
+    --color-text-heading: #2B2B28;
+    --color-text-body: #5C5850;
+    --color-text-inverse: #FAF7F2;
+    --color-border: #E4DED3;
+
+    /* Tipografi */
+    --font-heading: 'Fraunces', Georgia, serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+    --fs-h1: clamp(2rem, 4vw, 4rem);
+    --fs-h2: clamp(1.75rem, 3vw, 2.5rem);
+    --fs-h3: 1.5rem;
+    --fs-body: 1rem;
+    --fs-small: 0.875rem;
+
+    /* Spacing (8px temel birim) */
+    --space-1: 0.5rem;
+    --space-2: 1rem;
+    --space-3: 1.5rem;
+    --space-4: 2rem;
+    --space-6: 3rem;
+    --space-8: 4rem;
+    --space-12: 6rem;
+    --space-16: 8rem;
+
+    /* Border radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 16px;
+
+    /* Gölge */
+    --shadow-soft: 0 4px 24px rgba(43, 43, 40, 0.08);
+    --shadow-hover: 0 8px 32px rgba(43, 43, 40, 0.12);
+
+    /* Geçiş */
+    --transition-base: 0.3s ease;
+    --transition-fast: 0.15s ease;
+
+    /* Ek spacing (ince ayar) */
+    --space-0: 0.25rem;
+    --space-5: 2.5rem;
+
+    /* Ek tipografi kademesi */
+    --fs-h4: 1.25rem;
+
+    /* Layout / yapı */
+    --container-max: 1280px;
+    --container-padding: 1.25rem;
+    --header-height: 68px;
+    --radius-pill: 999px;
+
+    /* Z-index skalası (üst üste binmeyi önlemek için) */
+    --z-header: 100;
+    --z-sticky-cta: 150;
+    --z-drawer: 200;
+    --z-lightbox: 210;
+
+    /* iOS/Android güvenli alan */
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+}

@@ -1,0 +1,40 @@
+# ============================================================
+# Çiçekçi Web Sitesi — .gitignore
+# ============================================================
+
+# --- Ortam değişkenleri / gizli bilgiler ---
+# (Proje şu an .env kullanmıyor; ileride eklenirse otomatik korunur.)
+.env
+.env.*
+
+# --- Login rate-limit deposu (storage/, public_html DIŞINDA, çalışma
+#     zamanında oluşur — bkz. app/core/LoginThrottle.php) ---
+storage/*
+!storage/.gitkeep
+
+# --- Admin panelden yüklenen görseller ---
+# Kaynak kod değil, çalışma zamanı verisi. Gerçek ürün/galeri/logo
+# fotoğrafları Git'e değil, sunucunun kendi dosya sistemine gider.
+public_html/uploads/products/*
+public_html/uploads/gallery/*
+public_html/uploads/site/*
+!public_html/uploads/products/.gitkeep
+!public_html/uploads/gallery/.gitkeep
+!public_html/uploads/site/.gitkeep
+
+# --- Log / geçici dosyalar ---
+*.log
+*.tmp
+*.cache
+
+# --- İşletim sistemi dosyaları ---
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# --- IDE dosyaları ---
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
