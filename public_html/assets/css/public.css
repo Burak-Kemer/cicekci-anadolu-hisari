@@ -144,6 +144,14 @@ button:focus-visible,
 .btn--large { padding: 1rem 1.8rem; font-size: 1.05rem; }
 .btn--block { width: 100%; }
 
+/* Metin solda, ok sağda — kategori kartlarındaki (.category-tile__arrow)
+   ok deseniyle aynı dilde, sadece bu okla işaretlenmiş CTA'larda. */
+.btn--icon-right { justify-content: space-between; }
+.btn__arrow { color: var(--color-accent-gold); flex-shrink: 0; transition: transform var(--transition-fast); }
+@media (hover: hover) {
+    .btn--icon-right:hover .btn__arrow { transform: translateX(4px); }
+}
+
 /* ==================== Header ==================== */
 
 .site-header {
@@ -393,11 +401,72 @@ body { padding-bottom: calc(56px + var(--safe-bottom)); }
 
 .hero--home {
     position: relative;
-    background-color: var(--color-bg-deep);
-    color: var(--color-text-inverse);
+    background-color: var(--color-bg);
+    color: var(--color-text-heading);
     overflow: hidden;
     padding-top: var(--space-8);
     padding-bottom: var(--space-6);
+}
+/* <600px: fotoğrafın tek bir sabit penceresi yerine, hero iki ayrı dikey
+   bölgeye ayrılır (::before = üst/metin bölgesi, ::after = alt/çiçekçi+buket
+   bölgesi). Kaynak fotoğrafta sakin duvar+vazo SOLDA, çiçekçi+buket
+   SAĞDA — yani metin genişliği ekranın tamamını kapladığından tek bir
+   dikdörtgen pencere ile "metnin arkası sakin, altta çiçekçi+buket net"
+   ikisini birden veremiyor. Bu yüzden iki ayrı pencere/crop kullanıyoruz:
+   üst pencere kaynağın solundaki sakin duvar/vazo alanını gösterir (başlık
+   artık çiçeklerin/önlük yazısının üstüne binmez), alt pencere kaynağın
+   sağındaki kolu/önlüğü/çiçekçiyi VE buketi birlikte göstererek hem
+   "gerçek bir çiçekçi sahnesi" hissi verir hem buketin canlı kalmasını
+   sağlar. İki bölge bindirilip mask-image gradyanlarıyla birbirine
+   karıştırılır (crossfade) — "fotoğraf burada bitti, yeni crop burada
+   başladı" hissi vermeyen tek/doğal bir geçiş oluşur. ≥600px'te bu
+   pseudo-elementler devre dışı kalır ve .hero--home kendi
+   background-image'ını geri alır (aşağıdaki media query'lerde tanımlı)
+   — tablet/desktop dokunulmamış kalır. */
+@media (max-width: 599px) {
+    /* Tek CTA'ya inince buton yığınının bıraktığı yükseklik fotoğrafın
+       öznesini (çiçekçi + buket) net göstermeye yetmiyordu — metin
+       bloğu sabit ~240px yer kaplıyor, geri kalan pay fotoğraf için çok
+       dar kalıyordu. Hero'nun toplam yüksekliğini fotoğrafın hikâyesini
+       anlatabileceği kadar geri büyütüyoruz (3 buton varken de benzer
+       bir toplam yüksekliğe sahipti); bölge oranları da buna göre. */
+    .hero--home { padding-bottom: calc(var(--space-6) + 130px); }
+    .hero--home::before,
+    .hero--home::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        z-index: 0;
+        background-repeat: no-repeat;
+    }
+    .hero--home::before {
+        top: 0;
+        height: 58%;
+        background-image:
+            linear-gradient(180deg, rgba(250,247,242,0.4) 0%, rgba(250,247,242,0.16) 58%, rgba(250,247,242,0) 82%),
+            url('/assets/img/hero/tsinan-flowers-hero.webp');
+        background-size: 250% auto;
+        background-position: 2% 18%;
+        /* Son bant ::after'ın üst kısmıyla aynı yerde yumuşakça saydamlaşır. */
+        -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 86%, transparent 100%);
+        mask-image: linear-gradient(to bottom, #000 0%, #000 86%, transparent 100%);
+    }
+    .hero--home::after {
+        top: 50%;
+        bottom: 0;
+        /* Kol/önlük/çiçekçi VE buketin tamamına yakınını gösteren geniş
+           pencere — kaynak görselin x%44-%96, y%17-%62 aralığı. */
+        background-image: url('/assets/img/hero/tsinan-flowers-hero.webp');
+        background-size: 192% auto;
+        background-position: 92% 32%;
+        /* Fade-in bandı, önlükteki "TSİNAN" satırı tam bu bölgenin
+           üst kısmına denk geldiği için kısa tutuluyor — aksi halde
+           metin soluk/hayalet gibi görünüyor, "FLOWERS" satırı ise
+           (bandın altında kaldığından) net kalıyordu. */
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 7%, #000 100%);
+        mask-image: linear-gradient(to bottom, transparent 0%, #000 7%, #000 100%);
+    }
 }
 .hero__decor {
     position: absolute;
@@ -408,22 +477,86 @@ body { padding-bottom: calc(56px + var(--safe-bottom)); }
     opacity: 0.16;
     color: var(--color-accent-sage);
     pointer-events: none;
+    z-index: 1;
 }
 .botanical-line { width: 100%; height: auto; display: block; }
 
-.hero__content { position: relative; max-width: 640px; }
-.hero__title { color: var(--color-text-inverse); font-size: var(--fs-h1); margin-bottom: var(--space-2); }
-.hero__lede--on-dark { color: rgba(250,247,242,0.82); font-size: 1.05rem; max-width: 46ch; margin: 0 0 var(--space-4); }
+/* .container'dan miras kalan margin:0 auto, kendi max-width:640px'i ile
+   birleşince bloğu hero'nun ortasına taşıyordu (640px'lik kutu 1280px'lik
+   container içinde ortalanıyordu). Burada bilinçli olarak sola sabitliyoruz. */
+.hero__content { position: relative; z-index: 1; max-width: 640px; margin-left: 0; margin-right: auto; }
+.hero__title { color: var(--color-text-heading); font-size: var(--fs-h1); margin-bottom: var(--space-2); }
+.hero__lede--on-dark { color: rgba(43,43,40,0.78); font-size: 1.05rem; max-width: 46ch; margin: 0 0 var(--space-4); }
+/* Mobilde okunabilirlik artık öncelikle ::before/::after ile seçilen
+   "sakin" fotoğraf bölgesinden (yukarıda .hero--home <600px kuralları)
+   geliyor; bu halo sadece vazo/duvar dokusundaki hafif ton
+   değişimlerine karşı ince bir güvenlik payı. ≥600px'te (aşağıda)
+   kaldırılır — orada zaten geniş gradyan var. */
+.hero--home .eyebrow,
+.hero__title,
+.hero__lede--on-dark {
+    text-shadow: 0 0 8px rgba(250,247,242,0.55), 0 0 16px rgba(250,247,242,0.4);
+}
 .hero__actions { display: flex; flex-direction: column; gap: var(--space-2); }
 .hero__actions .btn { width: 100%; }
+/* <600px: outline butonlar (Koleksiyonu Keşfet, Bize Ulaşın) fotoğrafın
+   üstünde duruyor — bazı noktalarda (ör. önlükteki "TSİNAN FLOWERS"
+   yazısı) fotoğrafın kendi deseniyle metin çakışıp okunabilirliği
+   düşürüyor. Dolu bir zemin yerine ince bir "buzlu cam" (blur + hafif
+   saydam) katmanı: buton hâlâ şeffaf/transparan görünüyor ama yazı her
+   noktada net okunuyor. ≥600px'te zaten kendi (0.85 opaklık) zemini var. */
+@media (max-width: 599px) {
+    .hero__actions .btn--outline {
+        background-color: rgba(250,247,242,0.5);
+        -webkit-backdrop-filter: blur(6px);
+        backdrop-filter: blur(6px);
+    }
+}
 
 @media (min-width: 600px) {
     .hero__actions { flex-direction: row; }
     .hero__actions .btn { width: auto; }
     .hero__decor { width: 340px; }
+    /* Referans tasarımdaki gibi belirgin bir sol boşluk. */
+    .hero__content { padding-left: clamp(1.75rem, 4.5vw, 7.5rem); }
+    /* ≥600px'te geniş gradyan zaten yeterli kontrastı sağlıyor, mobildeki
+       text-shadow halo'suna gerek yok. */
+    .hero--home .eyebrow,
+    .hero__title,
+    .hero__lede--on-dark {
+        text-shadow: none;
+    }
+    /* 600-1023px'te sabit 640px'lik metin bloğu, dar viewport'a göre
+       genişliğin büyük bir yüzdesini kaplıyor (ör. 768px'te ~%80) — bu
+       yüzden burada daha geniş bir koruma bandı gerekiyor. ≥1024px'te
+       (aşağıda) metin oranı küçüldüğü için çok daha hızlı/erken
+       şeffaflaşan bir sarma kullanılabiliyor. */
+    .hero--home {
+        background-image:
+            linear-gradient(100deg, rgba(250,247,242,0.97) 0%, rgba(250,247,242,0.85) 50%, rgba(250,247,242,0.4) 72%, rgba(250,247,242,0) 92%),
+            url('/assets/img/hero/tsinan-flowers-hero.webp');
+        background-size: cover;
+        background-position: 70% 35%;
+    }
+    /* Outline buton, metin bloğunun sağ kenarında görselin daha canlı
+       kaldığı bölgeye denk gelebiliyor — okunabilirlik için hafif,
+       yarı saydam bir zemin verir (site genelindeki diğer outline
+       butonlar etkilenmez, sadece hero içindekiler). */
+    .hero__actions .btn--outline { background-color: rgba(250,247,242,0.85); }
 }
 @media (min-width: 1024px) {
-    .hero--home { padding-top: var(--space-16); padding-bottom: var(--space-12); }
+    /* ≥1024px'te metin bloğu viewport genişliğinin çok daha küçük bir
+       yüzdesini kapladığı için (ör. 1440px'te ~%43) daha hızlı/erken
+       şeffaflaşan bir sarma kullanılabiliyor — fotoğrafın orta/sağ tarafı
+       neredeyse tamamen orijinal ve net kalır. */
+    .hero--home {
+        background-image:
+            linear-gradient(90deg, rgba(250,247,242,0.98) 0%, rgba(250,247,242,0.94) 32%, rgba(250,247,242,0.65) 45%, rgba(250,247,242,0.18) 58%, rgba(250,247,242,0) 68%),
+            url('/assets/img/hero/tsinan-flowers-hero.webp');
+        padding-top: var(--space-16);
+        padding-bottom: var(--space-12);
+        background-position: 68% 30%;
+    }
     .hero__decor { width: 440px; opacity: 0.22; }
 }
 
@@ -564,7 +697,6 @@ body { padding-bottom: calc(56px + var(--safe-bottom)); }
     .split__inner { grid-template-columns: 1fr 1fr; align-items: center; gap: var(--space-8); }
     .split__inner--reverse .split__accent { order: 1; }
     .split__inner--reverse .split__text { order: 2; }
-    .split__accent { max-width: 100%; }
 }
 
 /* ==================== Feature list ==================== */

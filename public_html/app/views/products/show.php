@@ -6,7 +6,8 @@
  * @var array<string, string|null> $settings
  */
 
-$formattedPrice = number_format((float) $product['price'], 2, ',', '.') . ' ₺';
+$isContactPrice = ($product['price_status'] ?? 'fixed') === 'contact' || $product['price'] === null;
+$formattedPrice = $isContactPrice ? 'Fiyat için iletişime geçin' : number_format((float) $product['price'], 2, ',', '.') . ' ₺';
 
 $allImages = [];
 if (!empty($product['main_image'])) {
@@ -16,7 +17,9 @@ foreach ($images as $extraImage) {
     $allImages[] = $extraImage;
 }
 
-$waMessage = 'Merhaba, web sitenizdeki ' . $product['name'] . ' hakkında bilgi almak istiyorum. Web sitesinde görünen fiyat: ' . $formattedPrice . '.';
+$waMessage = $isContactPrice
+    ? 'Merhaba, web sitenizdeki ' . $product['name'] . ' için fiyat bilgisi almak istiyorum.'
+    : 'Merhaba, web sitenizdeki ' . $product['name'] . ' hakkında bilgi almak istiyorum. Web sitesinde görünen fiyat: ' . $formattedPrice . '.';
 $waLink = SettingsRepository::whatsAppLink($settings['whatsapp'] ?? null, $waMessage);
 
 $pPhoneRaw = $settings['phone'] ?? null;

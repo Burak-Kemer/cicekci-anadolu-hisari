@@ -15,6 +15,7 @@ $footerAddress = SettingsRepository::isPlaceholder($settings['address'] ?? null)
 $footerHours = SettingsRepository::isPlaceholder($settings['working_hours'] ?? null) ? null : $settings['working_hours'];
 $footerInstagram = SettingsRepository::isPlaceholder($settings['instagram_url'] ?? null) ? null : $settings['instagram_url'];
 $footerFacebook = SettingsRepository::isPlaceholder($settings['facebook_url'] ?? null) ? null : $settings['facebook_url'];
+$footerTelegram = SettingsRepository::isPlaceholder($settings['telegram_url'] ?? null) ? null : $settings['telegram_url'];
 ?>
 
 <footer class="site-footer">
@@ -23,10 +24,8 @@ $footerFacebook = SettingsRepository::isPlaceholder($settings['facebook_url'] ??
             <span class="site-footer__logo"><?php echo htmlspecialchars($footerSiteName); ?></span>
             <?php if ($footerTagline !== null): ?>
                 <p class="site-footer__tagline"><?php echo htmlspecialchars($footerTagline); ?></p>
-            <?php else: ?>
-                <p class="site-footer__tagline">Anadolu Hisarı ve çevresine özenle hazırlanmış çiçekler.</p>
             <?php endif; ?>
-            <?php if ($footerInstagram !== null || $footerFacebook !== null): ?>
+            <?php if ($footerInstagram !== null || $footerFacebook !== null || $footerTelegram !== null): ?>
             <div class="site-footer__social">
                 <?php if ($footerInstagram !== null): ?>
                     <a href="<?php echo htmlspecialchars($footerInstagram); ?>" target="_blank" rel="noopener" aria-label="Instagram">
@@ -36,6 +35,11 @@ $footerFacebook = SettingsRepository::isPlaceholder($settings['facebook_url'] ??
                 <?php if ($footerFacebook !== null): ?>
                     <a href="<?php echo htmlspecialchars($footerFacebook); ?>" target="_blank" rel="noopener" aria-label="Facebook">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 8.5h2V5.3h-2c-2 0-3.5 1.6-3.5 3.6v1.6H8.5v3h2V21h3v-7.5h2.2l.5-3H13.5V9c0-.3.2-.5.5-.5Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+                    </a>
+                <?php endif; ?>
+                <?php if ($footerTelegram !== null): ?>
+                    <a href="<?php echo htmlspecialchars($footerTelegram); ?>" target="_blank" rel="noopener" aria-label="Telegram">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 4 3 11.5l6 2M21 4 15.5 20l-6.5-6.5M21 4l-11.5 9.5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
                     </a>
                 <?php endif; ?>
             </div>

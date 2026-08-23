@@ -1,6 +1,6 @@
-# Çiçekçi Web Sitesi — Anadolu Hisarı
+# TSİNAN Flowers — Çiçekçi Web Sitesi
 
-Anadolu Hisarı (İstanbul) ve çevresine hizmet veren bir çiçekçi için geliştirilmiş, **ürün tanıtım ve katalog** web sitesi. Vanilla PHP + MySQL ile yazılmıştır; framework veya harici bağımlılık kullanmaz.
+Göksu, Beykoz (İstanbul) adresinde hizmet veren TSİNAN Flowers için geliştirilmiş, **ürün tanıtım ve katalog** web sitesi. Vanilla PHP + MySQL ile yazılmıştır; framework veya harici bağımlılık kullanmaz.
 
 > **Bu bir e-ticaret sitesi DEĞİLDİR.** Online sipariş, sepet veya ödeme altyapısı içermez. Ziyaretçiler ürünleri ve fiyatlarını inceler, telefon veya WhatsApp üzerinden doğrudan işletmeyle iletişime geçer.
 
@@ -24,11 +24,14 @@ Anadolu Hisarı (İstanbul) ve çevresine hizmet veren bir çiçekçi için geli
 1. **Web root / docroot'u `public_html/` olarak ayarlayın.** `config/`, `database/` ve `storage/` klasörleri kasıtlı olarak web kökü DIŞINDADIR — tarayıcıdan doğrudan erişilemezler (güvenlik).
 2. **Veritabanı bağlantısı:** `config/database.php` dosyasını gerçek veritabanı bilgilerinizle güncelleyin (`DB_HOST`, `DB_NAME`, `DB_USER`, `DB_PASS`). Depoda bu dosya placeholder değerlerle bulunur.
 3. **Veritabanı şeması:** Boş bir MySQL veritabanı oluşturup `database/schema.sql` dosyasını içe aktarın.
-4. **(Opsiyonel) Demo veri:** Test amaçlı örnek kategori/ürünler için `database/seed_demo.sql`'i de içe aktarabilirsiniz — tüm ürünler `[DEMO]` etiketlidir ve admin panelden kolayca silinebilir.
-5. **İlk admin hesabı:** `public_html/admin/setup.php` adresini tarayıcıda açıp bir kullanıcı adı/şifre belirleyin.
-6. **ÖNEMLİ — `setup.php`'yi silin:** Hesap oluşturulduktan sonra bu betik veritabanında zaten bir admin hesabı bulunduğu için kendini otomatik kilitler; yine de güvenlik için sunucudan tamamen silinmesi kesinlikle önerilir.
-7. **Gerçek işletme bilgileri:** Admin panel → Site Ayarları ekranından işletme adı, telefon, WhatsApp, e-posta, adres, çalışma saatleri ve sosyal medya bağlantıları girilir. Bu bilgiler koda gömülü değildir, veritabanında (`site_settings`) tutulur.
-8. **Domain bağlandığında:** `config/config.php` içindeki `SITE_CANONICAL_HOST` sabitini gerçek domaininizle doldurun. Boş (`null`) bırakıldığında sistem canonical/Open Graph/sitemap URL'lerini isteğin geldiği host'tan otomatik ve doğru şekilde üretir; www/non-www gibi belirli bir tercihi kalıcı olarak sabitlemek isterseniz bu değeri doldurmanız gerekir.
+4. **Migration'lar (mevcut bir veritabanını güncellerken):** `database/schema.sql`'i daha önce import etmiş canlı bir veritabanı varsa, sırasıyla `migration_001_price_status.sql`, `migration_002_real_site_settings.sql`, `migration_003_real_categories.sql` dosyalarını çalıştırın. Yeni kurulumlarda gerek yoktur — `schema.sql` zaten güncel yapıyı içerir.
+5. **(Opsiyonel) Demo veri:** Test amaçlı örnek kategori/ürünler için `database/seed_demo.sql`'i de içe aktarabilirsiniz — tüm ürünler `[DEMO]` etiketlidir ve admin panelden kolayca silinebilir.
+6. **İlk admin hesabı — iki yöntemden biri:**
+   - **Tarayıcıdan:** `public_html/admin/setup.php` adresini açıp bir kullanıcı adı/şifre belirleyin (yalnızca hiç admin hesabı yokken çalışır).
+   - **CLI'dan (önerilir, otomasyon/deploy için):** `ADMIN_SEED_PASSWORD` ortam değişkenini ayarlayıp `php scripts/seed_admin.php <kullanici_adi>` çalıştırın. Şifre hiçbir dosyaya yazılmaz, yalnızca `password_hash()` ile veritabanına hash'lenerek kaydedilir.
+7. **ÖNEMLİ — `setup.php`'yi silin:** Hesap oluşturulduktan sonra bu betik veritabanında zaten bir admin hesabı bulunduğu için kendini otomatik kilitler; yine de güvenlik için sunucudan tamamen silinmesi kesinlikle önerilir.
+8. **Gerçek işletme bilgileri:** Admin panel → Site Ayarları ekranından işletme adı, telefon, WhatsApp, e-posta, adres, çalışma saatleri, harita konumu ve sosyal medya bağlantıları girilir. Bu bilgiler koda gömülü değildir, veritabanında (`site_settings`) tutulur.
+9. **Domain bağlandığında:** `config/config.php` içindeki `SITE_CANONICAL_HOST` sabitini gerçek domaininizle doldurun. Boş (`null`) bırakıldığında sistem canonical/Open Graph/sitemap URL'lerini isteğin geldiği host'tan otomatik ve doğru şekilde üretir; www/non-www gibi belirli bir tercihi kalıcı olarak sabitlemek isterseniz bu değeri doldurmanız gerekir.
 
 ## Proje Yapısı
 

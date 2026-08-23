@@ -15,11 +15,9 @@ class HomeController
         $galleryPreview = array_slice($galleryRepository->all(), 0, 6);
 
         $siteName = SettingsRepository::siteName($settings);
-        $pageTitle = $siteName . ' | Anadolu Hisarı Çiçekçi';
+        $pageTitle = $siteName . ' | Beykoz Göksu Çiçekçi';
 
-        $rawDescription = SettingsRepository::isPlaceholder($settings['default_meta_description'] ?? null)
-            ? 'Anadolu Hisarı ve çevresinde taze çiçekler, özel tasarım buketler ve çiçek aranjmanları. Kataloğumuzu inceleyin, WhatsApp veya telefonla iletişime geçin.'
-            : (string) $settings['default_meta_description'];
+        $rawDescription = 'Beykoz Göksu\'da butik çiçek stüdyosu ' . $siteName . '. Güller, orkideler ve özel tasarım aranjmanlar.';
         $metaDescription = Seo::truncateDescription($rawDescription, 160);
 
         $canonicalPath = '/';

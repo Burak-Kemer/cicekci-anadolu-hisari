@@ -1,12 +1,14 @@
 <?php
 
 // Genel uygulama sabitleri.
-// İşletmenin gerçek adı, adresi, telefonu vb. netleştiğinde buradan değil,
-// admin panel "Site Ayarları" (site_settings tablosu) üzerinden yönetilecek.
-// SITE_NAME şimdilik yalnızca <title> ve iskelet görünümü için placeholder'dır.
+// İşletme bilgileri (adres, telefon, sosyal medya vb.) buradan değil,
+// admin panel "Site Ayarları" (site_settings tablosu) üzerinden yönetilir.
+// SITE_NAME, site_settings.site_name doldurulana kadar (ör. ilk kurulumda
+// veya DB bağlantısı henüz yokken) kullanılan gerçek işletme adıdır —
+// artık bir placeholder değildir.
 
 define('ENVIRONMENT', 'development'); // development | production
-define('SITE_NAME', 'Çiçekçi Anadolu Hisarı (Placeholder)');
+define('SITE_NAME', 'TSİNAN Flowers');
 
 // Canonical/OG/sitemap URL'leri için merkezi domain ayarı.
 // null bırakıldığında Seo::baseUrl() gelen isteğin GERÇEK host'unu kullanır

@@ -22,3 +22,26 @@ document.addEventListener('DOMContentLoaded', () => {
         toggle.setAttribute('aria-expanded', 'false');
     });
 });
+
+// Ürün formu: "Sabit Fiyat" / "Fiyat İçin İletişime Geçin" seçimine göre
+// fiyat alanını görsel olarak devre dışı bırakır. Sunucu tarafı doğrulama
+// zaten zorunludur — bu sadece kullanıcı deneyimini iyileştirir.
+document.addEventListener('DOMContentLoaded', () => {
+    const priceRadios = document.querySelectorAll('input[name="price_status"]');
+    const priceField = document.querySelector('input[name="price"]');
+
+    if (!priceRadios.length || !priceField) {
+        return;
+    }
+
+    const syncPriceField = () => {
+        const isContact = document.querySelector('input[name="price_status"]:checked')?.value === 'contact';
+        priceField.disabled = isContact;
+        if (isContact) {
+            priceField.value = '';
+        }
+    };
+
+    priceRadios.forEach((radio) => radio.addEventListener('change', syncPriceField));
+    syncPriceField();
+});

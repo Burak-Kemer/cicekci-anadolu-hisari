@@ -54,7 +54,13 @@ require __DIR__ . '/includes/admin-header.php';
                     <tr>
                         <td><?php echo htmlspecialchars($product['name']); ?></td>
                         <td><?php echo htmlspecialchars($product['category_name']); ?></td>
-                        <td><?php echo number_format((float) $product['price'], 2, ',', '.'); ?> ₺</td>
+                        <td>
+                            <?php if (($product['price_status'] ?? 'fixed') === 'contact' || $product['price'] === null): ?>
+                                İletişime Geçin
+                            <?php else: ?>
+                                <?php echo number_format((float) $product['price'], 2, ',', '.'); ?> ₺
+                            <?php endif; ?>
+                        </td>
                         <td><?php echo $product['is_active'] ? 'Aktif' : 'Pasif'; ?></td>
                     </tr>
                 <?php endforeach; ?>

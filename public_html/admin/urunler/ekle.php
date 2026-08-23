@@ -12,6 +12,7 @@ $errors = [];
 $name = '';
 $categoryId = 0;
 $price = '';
+$priceStatus = 'fixed';
 $description = '';
 $isActive = true;
 $isFeatured = false;
@@ -26,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $name = trim((string) ($_POST['name'] ?? ''));
     $categoryId = (int) ($_POST['category_id'] ?? 0);
+    $priceStatus = ($_POST['price_status'] ?? 'fixed') === 'contact' ? 'contact' : 'fixed';
     $priceInput = str_replace(',', '.', trim((string) ($_POST['price'] ?? '')));
     $price = $priceInput;
     $description = trim((string) ($_POST['description'] ?? ''));
@@ -43,8 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = 'Geçerli bir kategori seçmelisiniz.';
     }
 
-    if ($priceInput === '' || !is_numeric($priceInput) || (float) $priceInput < 0) {
-        $errors[] = 'Geçerli bir fiyat giriniz.';
+    if ($priceStatus === 'fixed' && ($priceInput === '' || !is_numeric($priceInput) || (float) $priceInput <= 0)) {
+        $errors[] = 'Sabit fiyat seçiliyken geçerli (0\'dan büyük) bir fiyat giriniz.';
     }
 
     $uploader = new ImageUploader(__DIR__ . '/../../uploads');
@@ -64,7 +66,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'name' => $name,
             'slug' => Slug::unique($db, 'products', Slug::generate($name)),
             'description' => $description !== '' ? $description : null,
-            'price' => (float) $priceInput,
+            'price' => $priceStatus === 'fixed' ? (float) $priceInput : null,
+            'price_status' => $priceStatus,
             'category_id' => $categoryId,
             'main_image' => $mainImagePath,
             'is_featured' => $isFeatured ? 1 : 0,
@@ -153,9 +156,17 @@ require __DIR__ . '/../includes/admin-header.php';
 
     <fieldset class="admin-fieldset">
         <legend>4. Fiyat</legend>
+        <label class="admin-field admin-field--radio">
+            <input type="radio" name="price_status" value="fixed" <?php echo $priceStatus === 'fixed' ? 'checked' : ''; ?>>
+            <span>Sabit Fiyat</span>
+        </label>
+        <label class="admin-field admin-field--radio">
+            <input type="radio" name="price_status" value="contact" <?php echo $priceStatus === 'contact' ? 'checked' : ''; ?>>
+            <span>Fiyat İçin İletişime Geçin (fiyat gösterilmez)</span>
+        </label>
         <label class="admin-field">
             <span>Fiyat (₺)</span>
-            <input type="text" name="price" value="<?php echo htmlspecialchars((string) $price); ?>" inputmode="decimal" required>
+            <input type="text" name="price" value="<?php echo htmlspecialchars((string) $price); ?>" inputmode="decimal" placeholder="Sadece 'Sabit Fiyat' seçiliyken doldurun">
         </label>
     </fieldset>
 

@@ -9,9 +9,7 @@ class PageController
         $siteName = SettingsRepository::siteName($settings);
         $pageTitle = 'Hakkımızda | ' . $siteName;
 
-        $rawDescription = SettingsRepository::isPlaceholder($settings['default_meta_description'] ?? null)
-            ? 'Anadolu Hisarı\'nda çiçekçilik anlayışımız, kalite yaklaşımımız ve özel tasarımlarımız hakkında.'
-            : (string) $settings['default_meta_description'];
+        $rawDescription = 'Beykoz Göksu\'da tasarım odaklı bir çiçek stüdyosu: ' . $siteName . '\'ı tanıyın.';
         $metaDescription = Seo::truncateDescription($rawDescription, 160);
 
         $canonicalPath = '/hakkimizda';
@@ -26,11 +24,9 @@ class PageController
     public static function contact(array $settings): void
     {
         $siteName = SettingsRepository::siteName($settings);
-        $pageTitle = 'İletişim | ' . $siteName;
+        $pageTitle = 'İletişim | ' . $siteName . ' Göksu Çiçekçi';
 
-        $rawDescription = SettingsRepository::isPlaceholder($settings['default_meta_description'] ?? null)
-            ? 'Telefon ve WhatsApp üzerinden bize ulaşın. Anadolu Hisarı ve çevresine hizmet veriyoruz.'
-            : (string) $settings['default_meta_description'];
+        $rawDescription = $siteName . '\'a Beykoz Göksu\'daki stüdyomuzdan, telefon, WhatsApp veya Telegram üzerinden ulaşın.';
         $metaDescription = Seo::truncateDescription($rawDescription, 160);
 
         $canonicalPath = '/iletisim';

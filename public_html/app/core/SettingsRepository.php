@@ -65,6 +65,15 @@ class SettingsRepository
             return null;
         }
 
+        // wa.me, ülke koduyla başlayan TAM uluslararası format bekler (90...).
+        // Türkiye'de yerel format ("0532...") başında ülke kodu değil, ulusal
+        // erişim öneki "0" taşır — bu, doğrudan wa.me'ye verilirse geçersiz/
+        // kırık bir link üretir. 0 ile başlayan 11 haneli TR mobil numaralarda
+        // baştaki 0'ı ülke koduyla (90) değiştiriyoruz.
+        if (strlen($digits) === 11 && $digits[0] === '0') {
+            $digits = '90' . substr($digits, 1);
+        }
+
         return 'https://wa.me/' . $digits . '?text=' . rawurlencode($message);
     }
 }

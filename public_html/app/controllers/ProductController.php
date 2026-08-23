@@ -22,11 +22,13 @@ class ProductController
         $products = $productRepository->activeAll($activeCategory['id'] ?? null);
 
         $siteName = SettingsRepository::siteName($settings);
-        $pageTitle = ($activeCategory !== null ? $activeCategory['name'] : 'Çiçeklerimiz') . ' | ' . $siteName;
+        $pageTitle = $activeCategory !== null
+            ? $activeCategory['name'] . ' | ' . $siteName
+            : 'Çiçeklerimiz | ' . $siteName . ' Beykoz Çiçekçi';
 
         $rawDescription = $activeCategory !== null
-            ? $activeCategory['name'] . ' kategorisindeki çiçeklerimizi inceleyin. Anadolu Hisarı ve çevresine hizmet veriyoruz.'
-            : 'Taze ve özenle hazırlanan çiçeklerimizin tamamını inceleyin. Anadolu Hisarı ve çevresine hizmet veriyoruz.';
+            ? $activeCategory['name'] . ' kategorisindeki çiçeklerimizi inceleyin.'
+            : 'Buketlerden orkidelere, özel tasarım kompozisyonlardan saksı bitkilerine ' . $siteName . ' koleksiyonunu keşfedin.';
         $metaDescription = Seo::truncateDescription($rawDescription, 160);
 
         $canonicalPath = $activeCategory !== null ? '/cicekler/' . $activeCategory['slug'] : '/cicekler';

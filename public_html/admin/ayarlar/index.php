@@ -19,8 +19,16 @@ $fields = [
     'working_hours' => 'Çalışma Saatleri',
     'instagram_url' => 'Instagram Bağlantısı',
     'facebook_url' => 'Facebook Bağlantısı',
+    'telegram_url' => 'Telegram Bağlantısı',
     'default_meta_title' => 'Varsayılan SEO Başlığı',
     'default_meta_description' => 'Varsayılan SEO Açıklaması',
+];
+
+// Harita koordinatları ayrı tutulur: sayısal (float) doğrulama gerektirir,
+// diğer alanlar gibi serbest metin değildir.
+$mapFields = [
+    'map_lat' => 'Harita Enlem (Latitude)',
+    'map_lng' => 'Harita Boylam (Longitude)',
 ];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -31,6 +39,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $updated = [];
     foreach ($fields as $key => $label) {
         $updated[$key] = trim((string) ($_POST[$key] ?? ''));
+    }
+
+    foreach ($mapFields as $key => $label) {
+        $rawValue = trim((string) ($_POST[$key] ?? ''));
+        if ($rawValue !== '' && !is_numeric($rawValue)) {
+            $errors[] = $label . ': geçerli bir sayı giriniz.';
+            continue;
+        }
+        $updated[$key] = $rawValue;
     }
 
     if (empty($errors) && !empty($_FILES['logo']['name'])) {
@@ -93,6 +110,17 @@ require __DIR__ . '/../includes/admin-header.php';
                 <?php else: ?>
                     <input type="text" name="<?php echo $key; ?>" value="<?php echo htmlspecialchars((string) ($settings[$key] ?? '')); ?>">
                 <?php endif; ?>
+            </label>
+        <?php endforeach; ?>
+    </fieldset>
+
+    <fieldset class="admin-fieldset">
+        <legend>Harita Konumu</legend>
+        <p>İletişim sayfasındaki harita ve yol tarifi bağlantısı için kullanılır. Boş bırakılırsa harita adres metnine göre gösterilir.</p>
+        <?php foreach ($mapFields as $key => $label): ?>
+            <label class="admin-field">
+                <span><?php echo htmlspecialchars($label); ?></span>
+                <input type="text" name="<?php echo $key; ?>" value="<?php echo htmlspecialchars((string) ($settings[$key] ?? '')); ?>" inputmode="decimal">
             </label>
         <?php endforeach; ?>
     </fieldset>

@@ -24,14 +24,13 @@ $homeWaLink = SettingsRepository::whatsAppLink(
         </svg>
     </div>
     <div class="container hero__content">
-        <span class="eyebrow eyebrow--on-dark">Anadolu Hisarı</span>
-        <h1 class="hero__title"><?php echo htmlspecialchars($homeSiteName); ?></h1>
+        <span class="eyebrow">Çiçekçi</span>
+        <h1 class="hero__title">Beykoz'da Tasarımla Buluşan Çiçekler</h1>
         <p class="hero__lede hero__lede--on-dark">
-            <?php echo $homeTagline !== null ? htmlspecialchars($homeTagline) : 'Anadolu Hisarı ve çevresine, özenle hazırlanan taze çiçekler ve özel tasarımlar.'; ?>
+            <?php echo $homeTagline !== null ? htmlspecialchars($homeTagline) : htmlspecialchars($homeSiteName) . ' — Göksu\'da, her aranjmanı özenle tasarlıyoruz.'; ?>
         </p>
         <div class="hero__actions">
-            <a href="/cicekler" class="btn btn--on-dark">Çiçekleri İncele</a>
-            <a href="/iletisim" class="btn btn--outline-inverse">İletişime Geç</a>
+            <a href="/cicekler" class="btn btn--outline btn--icon-right">Koleksiyonu Keşfet <span class="btn__arrow" aria-hidden="true">→</span></a>
         </div>
     </div>
 </section>
@@ -126,7 +125,7 @@ $homeWaLink = SettingsRepository::whatsAppLink(
                     <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 3c1.8 2 1.8 4.5 0 6.5C10.2 7.5 10.2 5 12 3Z" stroke="currentColor" stroke-width="1.3"/><path d="M12 9.5v11" stroke="currentColor" stroke-width="1.3"/></svg>
                 </span>
                 <h3>Özenle Hazırlanan Çiçekler</h3>
-                <p>Her sipariş tek tek elden geçer, standart üretim değildir.</p>
+                <p>Her aranjman tek tek elden geçer, standart üretim değildir.</p>
             </div>
             <div class="feature-list__item">
                 <span class="feature-list__icon" aria-hidden="true">
@@ -141,13 +140,6 @@ $homeWaLink = SettingsRepository::whatsAppLink(
                 </span>
                 <h3>Özel Tasarımlar</h3>
                 <p>İsteğinize göre şekillenen kişiselleştirilmiş kompozisyonlar.</p>
-            </div>
-            <div class="feature-list__item">
-                <span class="feature-list__icon" aria-hidden="true">
-                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 21s7-6.3 7-11.5A7 7 0 0 0 5 9.5C5 14.7 12 21 12 21Z" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="9.5" r="2.3" stroke="currentColor" stroke-width="1.4"/></svg>
-                </span>
-                <h3>Anadolu Hisarı ve Çevresine Hizmet</h3>
-                <p>Bölgenize yakın, güvenilir ve hızlı hizmet.</p>
             </div>
         </div>
     </div>

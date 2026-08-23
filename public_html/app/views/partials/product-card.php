@@ -3,7 +3,8 @@
  * Tekrar kullanılabilir ürün kartı.
  * @var array $product  (products.* + category_name + category_slug)
  */
-$cardPrice = number_format((float) $product['price'], 2, ',', '.') . ' ₺';
+$cardIsContactPrice = ($product['price_status'] ?? 'fixed') === 'contact' || $product['price'] === null;
+$cardPrice = $cardIsContactPrice ? 'Fiyat için iletişime geçin' : number_format((float) $product['price'], 2, ',', '.') . ' ₺';
 $cardHasImage = !empty($product['main_image']);
 ?>
 <article class="product-card">

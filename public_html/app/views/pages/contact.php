@@ -11,7 +11,20 @@ $cWhatsappLink = SettingsRepository::whatsAppLink(
 $cEmail = SettingsRepository::isPlaceholder($settings['email'] ?? null) ? null : $settings['email'];
 $cAddress = SettingsRepository::isPlaceholder($settings['address'] ?? null) ? null : $settings['address'];
 $cHours = SettingsRepository::isPlaceholder($settings['working_hours'] ?? null) ? null : $settings['working_hours'];
-$cHasMap = $cAddress !== null;
+$cTelegram = SettingsRepository::isPlaceholder($settings['telegram_url'] ?? null) ? null : $settings['telegram_url'];
+
+$cLat = $settings['map_lat'] ?? null;
+$cLng = $settings['map_lng'] ?? null;
+$cHasCoords = !SettingsRepository::isPlaceholder($cLat) && !SettingsRepository::isPlaceholder($cLng)
+    && is_numeric($cLat) && is_numeric($cLng);
+// Koordinat varsa doğrudan koordinattan (en doğru), yoksa adres metninden
+// (geocoding) harita gömülür. Koordinat yokken adres de yoksa harita hiç
+// gösterilmez.
+$cMapQuery = $cHasCoords ? ($cLat . ',' . $cLng) : $cAddress;
+$cHasMap = $cMapQuery !== null;
+$cDirectionsUrl = $cHasCoords
+    ? 'https://www.google.com/maps/dir/?api=1&destination=' . urlencode((string) $cLat . ',' . (string) $cLng)
+    : ($cAddress !== null ? 'https://www.google.com/maps/dir/?api=1&destination=' . urlencode($cAddress) : null);
 ?>
 <section class="section hero hero--page">
     <div class="container">
@@ -44,6 +57,16 @@ $cHasMap = $cAddress !== null;
             </a>
             <?php endif; ?>
 
+            <?php if ($cTelegram !== null): ?>
+            <a href="<?php echo htmlspecialchars($cTelegram); ?>" class="contact-card" target="_blank" rel="noopener">
+                <span class="contact-card__icon" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M21 4 3 11.5l6 2M21 4 15.5 20l-6.5-6.5M21 4l-11.5 9.5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
+                </span>
+                <span class="contact-card__label">Telegram</span>
+                <span class="contact-card__value">Hemen Yazın</span>
+            </a>
+            <?php endif; ?>
+
             <?php if ($cEmail !== null): ?>
             <a href="mailto:<?php echo htmlspecialchars($cEmail); ?>" class="contact-card">
                 <span class="contact-card__icon" aria-hidden="true">
@@ -62,8 +85,17 @@ $cHasMap = $cAddress !== null;
                 <span class="contact-card__label">Adres &amp; Çalışma Saatleri</span>
                 <?php if ($cAddress !== null): ?><span class="contact-card__value"><?php echo nl2br(htmlspecialchars($cAddress)); ?></span><?php endif; ?>
                 <?php if ($cHours !== null): ?><span class="contact-card__value contact-card__value--muted"><?php echo htmlspecialchars($cHours); ?></span><?php endif; ?>
+                <?php if ($cDirectionsUrl !== null): ?>
+                    <a href="<?php echo htmlspecialchars($cDirectionsUrl); ?>" target="_blank" rel="noopener" class="contact-card__value">Yol Tarifi Al →</a>
+                <?php endif; ?>
             </div>
             <?php endif; ?>
+
+            <div class="contact-card contact-card--static">
+                <span class="contact-card__label">Hizmet Seçenekleri</span>
+                <span class="contact-card__value">Mağaza içinde alışveriş</span>
+                <span class="contact-card__value">Mağazadan teslim alma</span>
+            </div>
 
             <?php if (!$cHasPhone && $cWhatsappLink === null && $cEmail === null && $cAddress === null): ?>
             <div class="contact-card contact-card--static">
@@ -75,7 +107,7 @@ $cHasMap = $cAddress !== null;
         <div class="contact-map">
             <?php if ($cHasMap): ?>
                 <iframe
-                    src="https://www.google.com/maps?q=<?php echo urlencode((string) $cAddress); ?>&output=embed"
+                    src="https://www.google.com/maps?q=<?php echo urlencode((string) $cMapQuery); ?>&output=embed"
                     class="contact-map__frame"
                     loading="lazy"
                     referrerpolicy="no-referrer-when-downgrade"

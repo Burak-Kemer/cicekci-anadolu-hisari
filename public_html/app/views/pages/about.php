@@ -6,7 +6,7 @@ $siteName = SettingsRepository::siteName($settings);
     <div class="container">
         <span class="eyebrow">Hakkımızda</span>
         <h1><?php echo htmlspecialchars($siteName); ?></h1>
-        <p class="hero__lede">Anadolu Hisarı ve çevresinde, özenle seçilmiş çiçeklerle her anı özel kılmayı amaçlayan bir çiçekçiyiz.</p>
+        <p class="hero__lede">Göksu, Beykoz'da özenle seçilmiş çiçeklerle her anı özel kılmayı amaçlayan bir çiçekçiyiz.</p>
     </div>
 </section>
 
@@ -15,7 +15,7 @@ $siteName = SettingsRepository::siteName($settings);
         <div class="split__text">
             <h2>Çiçekçilik Anlayışımız</h2>
             <p>Her buket, her aranjman bizim için ayrı bir özenle ele alınır. Taze ve kaliteli çiçekleri, doğru kompozisyonla bir araya getirerek hem klasik hem de özgün tasarımlar oluşturuyoruz.</p>
-            <p>Amacımız, sıradan bir çiçek siparişi değil; alan için de veren için de anlamlı bir deneyim yaratmak.</p>
+            <p>Amacımız, sadece çiçek sunmak değil; alan için de veren için de anlamlı bir deneyim yaratmak.</p>
         </div>
         <div class="split__accent" aria-hidden="true">
             <svg viewBox="0 0 200 240" class="botanical-line" fill="none">
@@ -37,10 +37,6 @@ $siteName = SettingsRepository::siteName($settings);
         <div class="feature-list__item">
             <h3>Özel Tasarımlar</h3>
             <p>Standart şablonlar yerine, isteğe göre şekillenen kişiselleştirilmiş kompozisyonlar hazırlıyoruz.</p>
-        </div>
-        <div class="feature-list__item">
-            <h3>Bölgeye Yakın Hizmet</h3>
-            <p>Anadolu Hisarı ve çevresine, ihtiyaç duyduğunuz zaman hızlı ve güvenilir şekilde ulaşıyoruz.</p>
         </div>
     </div>
 </section>

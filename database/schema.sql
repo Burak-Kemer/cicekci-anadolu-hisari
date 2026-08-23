@@ -1,5 +1,5 @@
 -- ============================================================
--- Çiçekçi Web Sitesi — Veritabanı Şeması (AŞAMA 1)
+-- TSİNAN Flowers — Veritabanı Şeması
 -- ============================================================
 -- Bu dosyayı, hosting kontrol panelinizde (cPanel > MySQL Veritabanları)
 -- önceden oluşturduğunuz BOŞ veritabanına phpMyAdmin > İçe Aktar (Import)
@@ -34,7 +34,11 @@ CREATE TABLE IF NOT EXISTS products (
     name                VARCHAR(150) NOT NULL,
     slug                VARCHAR(180) NOT NULL,
     description         TEXT NULL,
-    price               DECIMAL(10,2) UNSIGNED NOT NULL,
+    -- price NULL + price_status='contact' = "fiyat için iletişime geçin".
+    -- Tahmini/uydurma fiyat asla üretilmez; fiyat netleşmeden ürün bu
+    -- durumda yayınlanabilir.
+    price               DECIMAL(10,2) UNSIGNED NULL,
+    price_status        ENUM('fixed','contact') NOT NULL DEFAULT 'fixed',
     category_id         INT UNSIGNED NOT NULL,
     main_image          VARCHAR(255) NULL,
     is_featured         TINYINT(1) NOT NULL DEFAULT 0,
@@ -50,7 +54,11 @@ CREATE TABLE IF NOT EXISTS products (
     KEY idx_products_category (category_id),
     CONSTRAINT fk_products_category
         FOREIGN KEY (category_id) REFERENCES categories(id)
-        ON DELETE RESTRICT ON UPDATE CASCADE
+        ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT chk_products_price_status CHECK (
+        (price_status = 'fixed' AND price IS NOT NULL)
+        OR (price_status = 'contact' AND price IS NULL)
+    )
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_turkish_ci;
 
 -- ------------------------------------------------------------
@@ -113,22 +121,38 @@ CREATE TABLE IF NOT EXISTS admin_users (
 SET FOREIGN_KEY_CHECKS = 1;
 
 -- ------------------------------------------------------------
--- site_settings — placeholder temel satırlar
+-- site_settings — TSİNAN Flowers gerçek işletme bilgileri
 -- ------------------------------------------------------------
--- Bu değerler UYDURULMAMIŞTIR — hepsi açıkça PLACEHOLDER olarak
--- işaretlenmiştir. Gerçek işletme bilgileri geldiğinde admin panelin
--- "Site Ayarları" ekranından (AŞAMA 6) güncellenecektir.
+-- Doğrulanmamış alanlar (email, slogan, facebook) NULL bırakılmıştır —
+-- admin panel "Site Ayarları" ekranından ileride girilebilir.
 
 INSERT INTO site_settings (setting_key, setting_value) VALUES
-    ('site_name', 'PLACEHOLDER - Çiçekçi İşletme Adı'),
-    ('site_tagline', 'PLACEHOLDER - Marka sloganı'),
-    ('phone', 'PLACEHOLDER - Telefon numarası'),
-    ('whatsapp', 'PLACEHOLDER - WhatsApp numarası (örn: 905XXXXXXXXX)'),
-    ('email', 'PLACEHOLDER - E-posta adresi'),
-    ('address', 'PLACEHOLDER - Anadolu Hisarı, İstanbul (tam adres girilecek)'),
-    ('working_hours', 'PLACEHOLDER - Çalışma saatleri (örn: Pzt-Cmt 09:00-19:00)'),
-    ('instagram_url', 'PLACEHOLDER - Instagram bağlantısı'),
-    ('facebook_url', 'PLACEHOLDER - Facebook bağlantısı'),
+    ('site_name', 'TSİNAN Flowers'),
+    ('site_tagline', NULL),
+    ('phone', '0532 626 28 89'),
+    ('whatsapp', '0532 626 28 89'),
+    ('email', NULL),
+    ('address', 'Göksu, Sadri Alışık Cd. No:3, 34815 Beykoz/İstanbul'),
+    ('working_hours', 'Pazartesi - Cumartesi: 09:00 - 19:00 / Pazar: 09:00 - 17:00'),
+    ('instagram_url', 'https://www.instagram.com/tsinanflowers/'),
+    ('facebook_url', NULL),
+    ('telegram_url', 'https://t.me/tsinanflowers'),
+    ('map_lat', '41.079039'),
+    ('map_lng', '29.0738468'),
     ('logo_path', NULL),
-    ('default_meta_title', 'PLACEHOLDER - Varsayılan SEO başlığı'),
-    ('default_meta_description', 'PLACEHOLDER - Varsayılan SEO açıklaması');
+    ('default_meta_title', 'TSİNAN Flowers | Beykoz Çiçekçi'),
+    ('default_meta_description', 'TSİNAN Flowers, Göksu, Beykoz (İstanbul) adresinde hizmet veren çiçekçidir. Telefon veya WhatsApp üzerinden ürünler hakkında bilgi alabilirsiniz.');
+
+-- ------------------------------------------------------------
+-- categories — gerçek kategori yapısı
+-- ------------------------------------------------------------
+-- "Tören & Kutlama Çiçekleri" tür bilgisi teyit edilmediği için pasif
+-- (is_active = 0) eklenir; admin panelden görülür ama sitede yayınlanmaz.
+
+INSERT INTO categories (name, slug, sort_order, is_active) VALUES
+    ('Buketler', 'buketler', 1, 1),
+    ('Güller', 'guller', 2, 1),
+    ('Orkideler', 'orkideler', 3, 1),
+    ('Saksı Bitkileri', 'saksi-bitkileri', 4, 1),
+    ('Özel Tasarımlar / Sanatsal Kompozisyonlar', 'ozel-tasarimlar', 5, 1),
+    ('Tören & Kutlama Çiçekleri', 'toren-kutlama-cicekleri', 6, 0);

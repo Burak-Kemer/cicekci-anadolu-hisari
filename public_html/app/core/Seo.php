@@ -115,9 +115,6 @@ class Seo
             '@type' => 'Florist',
             'name' => $name,
             'url' => self::baseUrl() . '/',
-            // Kullanıcı tarafından defalarca doğrulanmış gerçek hizmet bölgesi
-            // (uydurma değil — proje briefinde ve bu oturumda açıkça teyit edildi).
-            'areaServed' => ['Anadolu Hisarı', 'Beykoz', 'Üsküdar'],
         ];
 
         $phone = SettingsRepository::isPlaceholder($settings['phone'] ?? null) ? null : $settings['phone'];
@@ -125,13 +122,31 @@ class Seo
             $schema['telephone'] = $phone;
         }
 
+        // addressLocality/addressRegion sabit "İstanbul" değil — adresin
+        // kendisinden (site_settings.address, ör. "...Beykoz/İstanbul")
+        // çıkarılamayacağı için burada yalnızca doğrulanmış streetAddress
+        // metninin tamamı kullanılır; ilçe/il ayrıştırması uydurma veri
+        // riski taşıdığından yapılmaz.
         $address = SettingsRepository::isPlaceholder($settings['address'] ?? null) ? null : $settings['address'];
         if ($address !== null) {
             $schema['address'] = [
                 '@type' => 'PostalAddress',
                 'streetAddress' => $address,
-                'addressLocality' => 'İstanbul',
                 'addressCountry' => 'TR',
+            ];
+        }
+
+        // Harita koordinatları yalnızca admin panelden (site_settings.map_lat/
+        // map_lng) gerçek/doğrulanmış bir değer girildiyse eklenir.
+        $lat = $settings['map_lat'] ?? null;
+        $lng = $settings['map_lng'] ?? null;
+        if (!SettingsRepository::isPlaceholder($lat) && !SettingsRepository::isPlaceholder($lng)
+            && is_numeric($lat) && is_numeric($lng)
+        ) {
+            $schema['geo'] = [
+                '@type' => 'GeoCoordinates',
+                'latitude' => (float) $lat,
+                'longitude' => (float) $lng,
             ];
         }
 
@@ -170,14 +185,20 @@ class Seo
             '@type' => 'Product',
             'name' => $product['name'],
             'url' => $productUrl,
-            'offers' => [
+        ];
+
+        // Fiyatı "iletişime geçin" durumundaki ürünlerde sahte/0 fiyatlı bir
+        // Offer üretilmez — offers alanı tamamen atlanır. Sadece gerçek bir
+        // fiyat girildiyse (price_status = 'fixed') Offer eklenir.
+        if (($product['price_status'] ?? 'fixed') === 'fixed' && $product['price'] !== null) {
+            $schema['offers'] = [
                 '@type' => 'Offer',
                 'priceCurrency' => 'TRY',
                 'price' => number_format((float) $product['price'], 2, '.', ''),
                 'availability' => 'https://schema.org/InStock',
                 'url' => $productUrl,
-            ],
-        ];
+            ];
+        }
 
         if (!empty($product['category_name'])) {
             $schema['category'] = $product['category_name'];

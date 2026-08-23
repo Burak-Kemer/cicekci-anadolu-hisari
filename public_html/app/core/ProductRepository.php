@@ -41,11 +41,11 @@ class ProductRepository
     {
         $stmt = $this->db->prepare(
             'INSERT INTO products
-                (name, slug, description, price, category_id, main_image, is_featured, is_active, sort_order, meta_title, meta_description)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+                (name, slug, description, price, price_status, category_id, main_image, is_featured, is_active, sort_order, meta_title, meta_description)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
         );
         $stmt->execute([
-            $data['name'], $data['slug'], $data['description'], $data['price'], $data['category_id'],
+            $data['name'], $data['slug'], $data['description'], $data['price'], $data['price_status'], $data['category_id'],
             $data['main_image'], $data['is_featured'], $data['is_active'], $data['sort_order'],
             $data['meta_title'], $data['meta_description'],
         ]);
@@ -57,12 +57,12 @@ class ProductRepository
     {
         $stmt = $this->db->prepare(
             'UPDATE products SET
-                name = ?, slug = ?, description = ?, price = ?, category_id = ?,
+                name = ?, slug = ?, description = ?, price = ?, price_status = ?, category_id = ?,
                 is_featured = ?, is_active = ?, sort_order = ?, meta_title = ?, meta_description = ?
              WHERE id = ?'
         );
         $stmt->execute([
-            $data['name'], $data['slug'], $data['description'], $data['price'], $data['category_id'],
+            $data['name'], $data['slug'], $data['description'], $data['price'], $data['price_status'], $data['category_id'],
             $data['is_featured'], $data['is_active'], $data['sort_order'], $data['meta_title'], $data['meta_description'],
             $id,
         ]);

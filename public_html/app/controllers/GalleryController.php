@@ -10,11 +10,9 @@ class GalleryController
         $images = $galleryRepository->all();
 
         $siteName = SettingsRepository::siteName($settings);
-        $pageTitle = 'Galeri | ' . $siteName;
+        $pageTitle = 'Galeri | ' . $siteName . ' Beykoz Çiçekçi';
 
-        $rawDescription = SettingsRepository::isPlaceholder($settings['default_meta_description'] ?? null)
-            ? 'Hazırladığımız buket ve çiçek aranjmanlarından örnekler.'
-            : (string) $settings['default_meta_description'];
+        $rawDescription = $siteName . ' stüdyosundan gerçek tasarımlar ve aranjmanlar.';
         $metaDescription = Seo::truncateDescription($rawDescription, 160);
 
         $canonicalPath = '/galeri';
