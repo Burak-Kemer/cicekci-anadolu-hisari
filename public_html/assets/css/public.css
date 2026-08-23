@@ -430,7 +430,7 @@ body { padding-bottom: calc(56px + var(--safe-bottom)); }
        dar kalıyordu. Hero'nun toplam yüksekliğini fotoğrafın hikâyesini
        anlatabileceği kadar geri büyütüyoruz (3 buton varken de benzer
        bir toplam yüksekliğe sahipti); bölge oranları da buna göre. */
-    .hero--home { padding-bottom: calc(var(--space-6) + 130px); }
+    .hero--home { padding-bottom: calc(var(--space-6) + 210px); }
     .hero--home::before,
     .hero--home::after {
         content: "";
@@ -442,30 +442,28 @@ body { padding-bottom: calc(56px + var(--safe-bottom)); }
     }
     .hero--home::before {
         top: 0;
-        height: 58%;
+        height: 61%;
         background-image:
             linear-gradient(180deg, rgba(250,247,242,0.4) 0%, rgba(250,247,242,0.16) 58%, rgba(250,247,242,0) 82%),
             url('/assets/img/hero/tsinan-flowers-hero.webp');
         background-size: 250% auto;
         background-position: 2% 18%;
-        /* Son bant ::after'ın üst kısmıyla aynı yerde yumuşakça saydamlaşır. */
         -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 86%, transparent 100%);
         mask-image: linear-gradient(to bottom, #000 0%, #000 86%, transparent 100%);
     }
     .hero--home::after {
-        top: 50%;
+        top: 58%;
         bottom: 0;
-        /* Kol/önlük/çiçekçi VE buketin tamamına yakınını gösteren geniş
-           pencere — kaynak görselin x%44-%96, y%17-%62 aralığı. */
         background-image: url('/assets/img/hero/tsinan-flowers-hero.webp');
-        background-size: 192% auto;
-        background-position: 92% 32%;
-        /* Fade-in bandı, önlükteki "TSİNAN" satırı tam bu bölgenin
-           üst kısmına denk geldiği için kısa tutuluyor — aksi halde
-           metin soluk/hayalet gibi görünüyor, "FLOWERS" satırı ise
-           (bandın altında kaldığından) net kalıyordu. */
-        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 7%, #000 100%);
-        mask-image: linear-gradient(to bottom, transparent 0%, #000 7%, #000 100%);
+        background-size: 150% auto;
+        background-position: 92% 41%;
+        /* Alt kenardaki %10'luk sönümleme, dar viewport'larda (360px gibi,
+           başlık 3 satıra sardığında hero boyu uzayıp bu bölgenin kaynak
+           görselde daha aşağısını göstermesine yol açtığında) masa şeridinin
+           belirmesini önlüyor — o noktada zaten saydamlaşıp hero'nun kendi
+           krem zeminine yumuşakça karışıyor. */
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 7%, #000 90%, transparent 100%);
+        mask-image: linear-gradient(to bottom, transparent 0%, #000 7%, #000 90%, transparent 100%);
     }
 }
 .hero__decor {

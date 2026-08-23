@@ -134,6 +134,7 @@ require __DIR__ . '/../includes/admin-header.php';
 <form method="post" action="/admin/urunler/duzenle.php?id=<?php echo $id; ?>" enctype="multipart/form-data" class="admin-form">
     <?php echo Csrf::field(); ?>
     <input type="hidden" name="id" value="<?php echo $id; ?>">
+    <input type="hidden" name="product_id" value="<?php echo $id; ?>">
 
     <?php foreach ($errors as $error): ?>
         <div class="admin-alert admin-alert--error"><?php echo htmlspecialchars($error); ?></div>
@@ -159,12 +160,10 @@ require __DIR__ . '/../includes/admin-header.php';
                 <?php foreach ($productImages as $image): ?>
                     <div class="admin-image-grid__item">
                         <img src="<?php echo htmlspecialchars($image['image_path']); ?>" alt="<?php echo htmlspecialchars((string) $image['alt_text']); ?>">
-                        <form method="post" action="/admin/urunler/gorsel-sil.php" class="admin-inline-form" onsubmit="return confirm('Bu görseli silmek istediğinize emin misiniz?');">
-                            <?php echo Csrf::field(); ?>
-                            <input type="hidden" name="image_id" value="<?php echo (int) $image['id']; ?>">
-                            <input type="hidden" name="product_id" value="<?php echo $id; ?>">
-                            <button type="submit" class="admin-link admin-link--danger">Sil</button>
-                        </form>
+                        <button type="submit" formaction="/admin/urunler/gorsel-sil.php" formmethod="post" formnovalidate
+                            name="image_id" value="<?php echo (int) $image['id']; ?>"
+                            class="admin-link admin-link--danger"
+                            onclick="return confirm('Bu görseli silmek istediğinize emin misiniz?');">Sil</button>
                     </div>
                 <?php endforeach; ?>
             </div>
