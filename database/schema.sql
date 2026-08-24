@@ -123,8 +123,9 @@ SET FOREIGN_KEY_CHECKS = 1;
 -- ------------------------------------------------------------
 -- site_settings — TSİNAN Flowers gerçek işletme bilgileri
 -- ------------------------------------------------------------
--- Doğrulanmamış alanlar (email, slogan, facebook) NULL bırakılmıştır —
--- admin panel "Site Ayarları" ekranından ileride girilebilir.
+-- Doğrulanmamış alanlar (email, slogan) NULL bırakılmıştır — admin panel
+-- "Site Ayarları" ekranından ileride girilebilir. facebook_url, Google
+-- İşletme Profili'nde doğrulanan gerçek bağlantıdır (2026-08-23).
 
 INSERT INTO site_settings (setting_key, setting_value) VALUES
     ('site_name', 'TSİNAN Flowers'),
@@ -135,7 +136,7 @@ INSERT INTO site_settings (setting_key, setting_value) VALUES
     ('address', 'Göksu, Sadri Alışık Cd. No:3, 34815 Beykoz/İstanbul'),
     ('working_hours', 'Pazartesi - Cumartesi: 09:00 - 19:00 / Pazar: 09:00 - 17:00'),
     ('instagram_url', 'https://www.instagram.com/tsinanflowers/'),
-    ('facebook_url', NULL),
+    ('facebook_url', 'https://www.facebook.com/p/tsinanflowers-100054528096665'),
     ('telegram_url', 'https://t.me/tsinanflowers'),
     ('map_lat', '41.079039'),
     ('map_lng', '29.0738468'),

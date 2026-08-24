@@ -2,7 +2,6 @@
 /**
  * @var array $featuredProducts
  * @var array $categories
- * @var array $galleryPreview
  * @var array<string, string|null> $settings
  */
 $homeSiteName = SettingsRepository::siteName($settings);
@@ -91,27 +90,6 @@ $homeWaLink = SettingsRepository::whatsAppLink(
         </div>
     </div>
 </section>
-
-<?php if (!empty($galleryPreview)): ?>
-<section class="section section--tinted">
-    <div class="container">
-        <div class="section__heading">
-            <span class="eyebrow">Galeri</span>
-            <h2 class="section__title">Çalışmalarımızdan</h2>
-        </div>
-        <div class="gallery-preview-grid">
-            <?php foreach ($galleryPreview as $index => $image): ?>
-                <div class="gallery-preview-grid__item<?php echo $index === 0 ? ' gallery-preview-grid__item--wide' : ''; ?>">
-                    <img src="<?php echo htmlspecialchars($image['image_path']); ?>" alt="<?php echo htmlspecialchars((string) ($image['alt_text'] ?? '')); ?>" loading="lazy">
-                </div>
-            <?php endforeach; ?>
-        </div>
-        <div class="section__footer">
-            <a href="/galeri" class="btn btn--outline">Tüm Galeriyi Gör</a>
-        </div>
-    </div>
-</section>
-<?php endif; ?>
 
 <section class="section">
     <div class="container">

@@ -12,6 +12,7 @@ $cEmail = SettingsRepository::isPlaceholder($settings['email'] ?? null) ? null :
 $cAddress = SettingsRepository::isPlaceholder($settings['address'] ?? null) ? null : $settings['address'];
 $cHours = SettingsRepository::isPlaceholder($settings['working_hours'] ?? null) ? null : $settings['working_hours'];
 $cTelegram = SettingsRepository::isPlaceholder($settings['telegram_url'] ?? null) ? null : $settings['telegram_url'];
+$cInstagram = SettingsRepository::isPlaceholder($settings['instagram_url'] ?? null) ? null : $settings['instagram_url'];
 
 $cLat = $settings['map_lat'] ?? null;
 $cLng = $settings['map_lng'] ?? null;
@@ -67,6 +68,16 @@ $cDirectionsUrl = $cHasCoords
             </a>
             <?php endif; ?>
 
+            <?php if ($cInstagram !== null): ?>
+            <a href="<?php echo htmlspecialchars($cInstagram); ?>" class="contact-card" target="_blank" rel="noopener">
+                <span class="contact-card__icon" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor"/></svg>
+                </span>
+                <span class="contact-card__label">Instagram</span>
+                <span class="contact-card__value">Bizi Takip Edin</span>
+            </a>
+            <?php endif; ?>
+
             <?php if ($cEmail !== null): ?>
             <a href="mailto:<?php echo htmlspecialchars($cEmail); ?>" class="contact-card">
                 <span class="contact-card__icon" aria-hidden="true">
@@ -90,12 +101,6 @@ $cDirectionsUrl = $cHasCoords
                 <?php endif; ?>
             </div>
             <?php endif; ?>
-
-            <div class="contact-card contact-card--static">
-                <span class="contact-card__label">Hizmet Seçenekleri</span>
-                <span class="contact-card__value">Mağaza içinde alışveriş</span>
-                <span class="contact-card__value">Mağazadan teslim alma</span>
-            </div>
 
             <?php if (!$cHasPhone && $cWhatsappLink === null && $cEmail === null && $cAddress === null): ?>
             <div class="contact-card contact-card--static">

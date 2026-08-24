@@ -3,9 +3,10 @@
 -- ============================================================
 -- schema.sql'in sonunda import edilmiş olan PLACEHOLDER site_settings
 -- satırlarını, doğrulanmış gerçek TSİNAN Flowers bilgileriyle değiştirir.
--- Doğrulanmamış hiçbir alan (email, slogan, facebook) doldurulmamıştır —
--- bunlar boş/NULL bırakılmıştır ve admin panel > Site Ayarları üzerinden
--- ileride girilebilir.
+-- Doğrulanmamış hiçbir alan (email, slogan) doldurulmamıştır — bunlar
+-- boş/NULL bırakılmıştır ve admin panel > Site Ayarları üzerinden ileride
+-- girilebilir. facebook_url, Google İşletme Profili'nde doğrulanan gerçek
+-- bağlantıdır (2026-08-23).
 --
 -- INSERT ... ON DUPLICATE KEY UPDATE kullanır (setting_key UNIQUE), bu
 -- yüzden idempotenttir ve hem "hiç satır yok" hem "placeholder satır var"
@@ -25,7 +26,7 @@ INSERT INTO site_settings (setting_key, setting_value) VALUES
     ('address', 'Göksu, Sadri Alışık Cd. No:3, 34815 Beykoz/İstanbul'),
     ('working_hours', 'Pazartesi - Cumartesi: 09:00 - 19:00 / Pazar: 09:00 - 17:00'),
     ('instagram_url', 'https://www.instagram.com/tsinanflowers/'),
-    ('facebook_url', NULL),
+    ('facebook_url', 'https://www.facebook.com/p/tsinanflowers-100054528096665'),
     ('telegram_url', 'https://t.me/tsinanflowers'),
     ('map_lat', '41.079039'),
     ('map_lng', '29.0738468'),

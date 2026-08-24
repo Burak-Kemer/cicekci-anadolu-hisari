@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
     initMobileDrawer();
-    initLightbox();
     initProductGalleryDots();
     scrollActiveChipIntoView();
     initScrollReveal();
@@ -90,104 +89,6 @@ function initMobileDrawer() {
     if (panel) {
         trapFocus(panel);
     }
-}
-
-function initLightbox() {
-    const dataScript = document.getElementById('galleryData');
-    const lightbox = document.getElementById('lightbox');
-    if (!dataScript || !lightbox) {
-        return;
-    }
-
-    let images = [];
-    try {
-        images = JSON.parse(dataScript.textContent || '[]');
-    } catch (error) {
-        return;
-    }
-
-    const imageEl = document.getElementById('lightboxImage');
-    const captionEl = document.getElementById('lightboxCaption');
-    const closeBtn = document.getElementById('lightboxClose');
-    const prevBtn = document.getElementById('lightboxPrev');
-    const nextBtn = document.getElementById('lightboxNext');
-    let currentIndex = 0;
-    let lastFocused = null;
-
-    function show(index) {
-        if (images.length === 0) {
-            return;
-        }
-        currentIndex = (index + images.length) % images.length;
-        const img = images[currentIndex];
-        if (imageEl) {
-            imageEl.src = img.src;
-            imageEl.alt = img.alt || '';
-        }
-        if (captionEl) {
-            captionEl.textContent = img.caption || '';
-        }
-    }
-
-    function open(index) {
-        lastFocused = document.activeElement;
-        show(index);
-        lightbox.classList.add('is-open');
-        lightbox.setAttribute('aria-hidden', 'false');
-        document.documentElement.classList.add('drawer-open');
-        if (closeBtn) {
-            closeBtn.focus();
-        }
-    }
-
-    function close() {
-        lightbox.classList.remove('is-open');
-        lightbox.setAttribute('aria-hidden', 'true');
-        document.documentElement.classList.remove('drawer-open');
-        if (lastFocused && typeof lastFocused.focus === 'function') {
-            lastFocused.focus();
-        }
-    }
-
-    document.querySelectorAll('[data-lightbox-trigger]').forEach((btn) => {
-        btn.addEventListener('click', () => {
-            const index = parseInt(btn.getAttribute('data-index') || '0', 10);
-            open(index);
-        });
-    });
-
-    if (closeBtn) {
-        closeBtn.addEventListener('click', close);
-    }
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => show(currentIndex - 1));
-    }
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => show(currentIndex + 1));
-    }
-
-    lightbox.addEventListener('click', (event) => {
-        if (event.target === lightbox) {
-            close();
-        }
-    });
-
-    document.addEventListener('keydown', (event) => {
-        if (!lightbox.classList.contains('is-open')) {
-            return;
-        }
-        if (event.key === 'Escape') {
-            close();
-        }
-        if (event.key === 'ArrowLeft') {
-            show(currentIndex - 1);
-        }
-        if (event.key === 'ArrowRight') {
-            show(currentIndex + 1);
-        }
-    });
-
-    trapFocus(lightbox);
 }
 
 function initProductGalleryDots() {

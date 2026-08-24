@@ -22,7 +22,6 @@ class SitemapController
         $urls = [];
         $urls[] = ['loc' => Seo::canonicalUrl('/'), 'changefreq' => 'weekly', 'priority' => '1.0'];
         $urls[] = ['loc' => Seo::canonicalUrl('/cicekler'), 'changefreq' => 'daily', 'priority' => '0.9'];
-        $urls[] = ['loc' => Seo::canonicalUrl('/galeri'), 'changefreq' => 'weekly', 'priority' => '0.5'];
         $urls[] = ['loc' => Seo::canonicalUrl('/hakkimizda'), 'changefreq' => 'monthly', 'priority' => '0.4'];
         $urls[] = ['loc' => Seo::canonicalUrl('/iletisim'), 'changefreq' => 'monthly', 'priority' => '0.4'];
 

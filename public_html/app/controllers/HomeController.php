@@ -8,11 +8,9 @@ class HomeController
     {
         $productRepository = new ProductRepository($db);
         $categoryRepository = new CategoryRepository($db);
-        $galleryRepository = new GalleryRepository($db);
 
         $featuredProducts = $productRepository->activeFeatured(6);
         $categories = $categoryRepository->activeAll();
-        $galleryPreview = array_slice($galleryRepository->all(), 0, 6);
 
         $siteName = SettingsRepository::siteName($settings);
         $pageTitle = $siteName . ' | Beykoz Göksu Çiçekçi';

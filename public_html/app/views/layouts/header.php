@@ -17,7 +17,6 @@ $whatsappQuickLink = SettingsRepository::whatsAppLink(
 $navItems = [
     '/' => 'Ana Sayfa',
     '/cicekler' => 'Çiçeklerimiz',
-    '/galeri' => 'Galeri',
     '/hakkimizda' => 'Hakkımızda',
     '/iletisim' => 'İletişim',
 ];

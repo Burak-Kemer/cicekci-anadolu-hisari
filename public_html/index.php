@@ -7,12 +7,10 @@ require_once __DIR__ . '/app/core/Database.php';
 require_once __DIR__ . '/app/core/Router.php';
 require_once __DIR__ . '/app/core/CategoryRepository.php';
 require_once __DIR__ . '/app/core/ProductRepository.php';
-require_once __DIR__ . '/app/core/GalleryRepository.php';
 require_once __DIR__ . '/app/core/SettingsRepository.php';
 require_once __DIR__ . '/app/core/Seo.php';
 require_once __DIR__ . '/app/controllers/HomeController.php';
 require_once __DIR__ . '/app/controllers/ProductController.php';
-require_once __DIR__ . '/app/controllers/GalleryController.php';
 require_once __DIR__ . '/app/controllers/PageController.php';
 require_once __DIR__ . '/app/controllers/SitemapController.php';
 
@@ -44,10 +42,6 @@ $router->get('/urun/{slug}', function (array $params) use ($db, $settings) {
         http_response_code(404);
         require __DIR__ . '/app/views/errors/404.php';
     }
-});
-
-$router->get('/galeri', function () use ($db, $settings) {
-    GalleryController::index($db, $settings);
 });
 
 $router->get('/hakkimizda', function () use ($settings) {

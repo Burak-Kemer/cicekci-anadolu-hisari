@@ -50,7 +50,6 @@ $footerTelegram = SettingsRepository::isPlaceholder($settings['telegram_url'] ??
             <span class="site-footer__heading">Hızlı Bağlantılar</span>
             <a href="/">Ana Sayfa</a>
             <a href="/cicekler">Çiçeklerimiz</a>
-            <a href="/galeri">Galeri</a>
             <a href="/hakkimizda">Hakkımızda</a>
             <a href="/iletisim">İletişim</a>
         </nav>
