@@ -135,7 +135,7 @@ function initScrollReveal() {
         return;
     }
 
-    const selectors = '.product-card, .category-tile, .feature-list__item, .split__text, .split__accent, .contact-card';
+    const selectors = '.product-card, .category-tile, .feature-list__item, .split__text, .split__accent, .split__media, .about-photo, .contact-card';
     const elements = document.querySelectorAll(selectors);
     if (elements.length === 0) {
         return;

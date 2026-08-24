@@ -688,14 +688,22 @@ body { padding-bottom: calc(56px + var(--safe-bottom)); }
 
 .split__inner { display: grid; gap: var(--space-4); }
 .split__accent { color: var(--color-accent-sage); max-width: 180px; margin-left: auto; margin-right: auto; }
+.split__media { border-radius: var(--radius-md); overflow: hidden; aspect-ratio: 4 / 5; }
+.split__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .split__text { max-width: 60ch; }
 .split__text p { margin-bottom: var(--space-2); }
 
 @media (min-width: 900px) {
     .split__inner { grid-template-columns: 1fr 1fr; align-items: center; gap: var(--space-8); }
-    .split__inner--reverse .split__accent { order: 1; }
+    .split__inner--reverse .split__accent,
+    .split__inner--reverse .split__media { order: 1; }
     .split__inner--reverse .split__text { order: 2; }
 }
+
+/* ==================== Hakkımızda — "Çiçekçilik Anlayışımız" görseli ==================== */
+
+.about-photo { border-radius: var(--radius-md); overflow: hidden; aspect-ratio: 2 / 3; }
+.about-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 /* ==================== Feature list ==================== */
 

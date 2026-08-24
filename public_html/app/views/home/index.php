@@ -74,13 +74,8 @@ $homeWaLink = SettingsRepository::whatsAppLink(
 
 <section class="section split">
     <div class="container split__inner split__inner--reverse">
-        <div class="split__accent" aria-hidden="true">
-            <svg viewBox="0 0 200 240" class="botanical-line" fill="none">
-                <path d="M100 20 C 60 60, 60 120, 100 160 C 140 120, 140 60, 100 20 Z" stroke="currentColor" stroke-width="1.4"/>
-                <path d="M100 160 L100 220" stroke="currentColor" stroke-width="1.4"/>
-                <path d="M100 190 C 80 190, 65 200, 55 215" stroke="currentColor" stroke-width="1.2"/>
-                <path d="M100 175 C 120 175, 135 185, 145 200" stroke="currentColor" stroke-width="1.2"/>
-            </svg>
+        <div class="split__media">
+            <img src="/assets/img/home/hikayemiz-buket.jpg" alt="TSİNAN Flowers elinden özenle hazırlanmış bir buket" loading="lazy">
         </div>
         <div class="split__text">
             <span class="eyebrow">Hikayemiz</span>

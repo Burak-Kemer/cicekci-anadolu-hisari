@@ -4,6 +4,7 @@ RewriteEngine On
 RewriteCond %{HTTPS} off
 RewriteCond %{HTTP_HOST} !^localhost [NC]
 RewriteCond %{HTTP_HOST} !^127\.0\.0\.1
+RewriteCond %{HTTP_HOST} !^(www\.)?cicek\.local$ [NC]
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # Temel güvenlik başlıkları
