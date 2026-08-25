@@ -25,6 +25,8 @@
         </div>
     </aside>
 
+    <div class="admin-sidebar-backdrop" id="adminSidebarBackdrop"></div>
+
     <div class="admin-main">
         <header class="admin-topbar">
             <button type="button" class="admin-topbar__menu-toggle" id="adminMenuToggle" aria-label="Menüyü aç/kapat" aria-expanded="false">☰</button>

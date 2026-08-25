@@ -40,6 +40,7 @@ require __DIR__ . '/includes/admin-header.php';
     <?php if (empty($latestProducts)): ?>
         <p class="admin-empty">Henüz ürün eklenmemiş.</p>
     <?php else: ?>
+        <div class="admin-table-wrap">
         <table class="admin-table">
             <thead>
                 <tr>
@@ -66,6 +67,7 @@ require __DIR__ . '/includes/admin-header.php';
                 <?php endforeach; ?>
             </tbody>
         </table>
+        </div>
     <?php endif; ?>
 </section>
 <?php

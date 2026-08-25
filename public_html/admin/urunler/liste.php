@@ -20,7 +20,7 @@ require __DIR__ . '/../includes/admin-header.php';
     <a href="/admin/urunler/ekle.php" class="admin-btn admin-btn--primary">+ Yeni Ürün</a>
 
     <form method="get" action="/admin/urunler/liste.php" class="admin-inline-form">
-        <select name="category_id" onchange="this.form.submit()">
+        <select name="category_id" class="admin-select" onchange="this.form.submit()">
             <option value="">Tüm Kategoriler</option>
             <?php foreach ($categories as $category): ?>
                 <option value="<?php echo (int) $category['id']; ?>" <?php echo $categoryFilter === (int) $category['id'] ? 'selected' : ''; ?>>
@@ -34,7 +34,8 @@ require __DIR__ . '/../includes/admin-header.php';
 <?php if (empty($products)): ?>
     <p class="admin-empty">Kayıtlı ürün bulunamadı.</p>
 <?php else: ?>
-    <table class="admin-table">
+    <div class="admin-table-wrap">
+    <table class="admin-table admin-table--products">
         <thead>
             <tr>
                 <th>Görsel</th>
@@ -85,6 +86,7 @@ require __DIR__ . '/../includes/admin-header.php';
             <?php endforeach; ?>
         </tbody>
     </table>
+    </div>
 <?php endif; ?>
 <?php
 require __DIR__ . '/../includes/admin-footer.php';

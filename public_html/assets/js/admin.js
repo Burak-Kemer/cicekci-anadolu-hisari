@@ -1,15 +1,41 @@
 document.addEventListener('DOMContentLoaded', () => {
     const toggle = document.getElementById('adminMenuToggle');
     const sidebar = document.getElementById('adminSidebar');
+    const backdrop = document.getElementById('adminSidebarBackdrop');
 
     if (!toggle || !sidebar) {
         return;
     }
 
+    function openSidebar() {
+        sidebar.classList.add('is-open');
+        toggle.setAttribute('aria-expanded', 'true');
+        if (backdrop) {
+            backdrop.classList.add('is-open');
+        }
+        document.documentElement.classList.add('admin-scroll-lock');
+    }
+
+    function closeSidebar() {
+        sidebar.classList.remove('is-open');
+        toggle.setAttribute('aria-expanded', 'false');
+        if (backdrop) {
+            backdrop.classList.remove('is-open');
+        }
+        document.documentElement.classList.remove('admin-scroll-lock');
+    }
+
     toggle.addEventListener('click', () => {
-        const isOpen = sidebar.classList.toggle('is-open');
-        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        if (sidebar.classList.contains('is-open')) {
+            closeSidebar();
+        } else {
+            openSidebar();
+        }
     });
+
+    if (backdrop) {
+        backdrop.addEventListener('click', closeSidebar);
+    }
 
     document.addEventListener('click', (event) => {
         if (!sidebar.classList.contains('is-open')) {
@@ -18,8 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (sidebar.contains(event.target) || toggle.contains(event.target)) {
             return;
         }
-        sidebar.classList.remove('is-open');
-        toggle.setAttribute('aria-expanded', 'false');
+        closeSidebar();
     });
 });
 

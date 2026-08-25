@@ -437,4 +437,82 @@
     .admin-topbar__menu-toggle {
         display: inline-block;
     }
+
+    .admin-sidebar-backdrop {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background-color: rgba(20, 24, 18, 0.5);
+        z-index: 15;
+    }
+
+    .admin-sidebar-backdrop.is-open {
+        display: block;
+    }
+}
+
+html.admin-scroll-lock,
+html.admin-scroll-lock body {
+    overflow: hidden;
+}
+
+/* ==================== Tablolar — mobil taşma önleme ==================== */
+
+.admin-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.admin-select {
+    display: inline-block;
+    padding: 0.55rem 0.7rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: var(--fs-body);
+    background-color: #fff;
+    min-height: 44px;
+}
+
+@media (max-width: 600px) {
+    .admin-content {
+        padding: var(--space-2);
+    }
+
+    .admin-form {
+        padding: var(--space-3);
+    }
+
+    /* Ürünler tablosunda ikincil sütunlar (Öne Çıkan, Sıra) mobilde
+       gizlenir — veri kaybolmaz, sadece Düzenle ekranında görülür;
+       kalan sütunlar için yatay kaydırma hâlâ mevcuttur. */
+    .admin-table--products th:nth-child(6),
+    .admin-table--products td:nth-child(6),
+    .admin-table--products th:nth-child(7),
+    .admin-table--products td:nth-child(7) {
+        display: none;
+    }
+
+    /* Kategoriler tablosunda ikincil sütunlar (Sıra, Slug) mobilde gizlenir. */
+    .admin-table--categories th:nth-child(1),
+    .admin-table--categories td:nth-child(1),
+    .admin-table--categories th:nth-child(3),
+    .admin-table--categories td:nth-child(3) {
+        display: none;
+    }
+
+    /* Dokunmatik hedefler: Düzenle/Sil en az ~44px alan kaplar,
+       aralarında yanlışlıkla basmayı azaltacak yeterli boşluk kalır. */
+    .admin-table__actions {
+        gap: var(--space-2);
+    }
+
+    .admin-table__actions .admin-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 44px;
+        min-height: 44px;
+        padding: 0.5rem;
+    }
 }

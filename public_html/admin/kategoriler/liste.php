@@ -19,7 +19,8 @@ require __DIR__ . '/../includes/admin-header.php';
 <?php if (empty($categories)): ?>
     <p class="admin-empty">Henüz kategori eklenmemiş.</p>
 <?php else: ?>
-    <table class="admin-table">
+    <div class="admin-table-wrap">
+    <table class="admin-table admin-table--categories">
         <thead>
             <tr>
                 <th>Sıra</th>
@@ -52,6 +53,7 @@ require __DIR__ . '/../includes/admin-header.php';
             <?php endforeach; ?>
         </tbody>
     </table>
+    </div>
 <?php endif; ?>
 <?php
 require __DIR__ . '/../includes/admin-footer.php';
