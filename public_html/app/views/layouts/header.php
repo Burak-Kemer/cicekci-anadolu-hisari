@@ -67,6 +67,13 @@ $ogImageUrl = $ogImage ?? null;
     <meta name="twitter:image" content="<?php echo htmlspecialchars($ogImageUrl); ?>">
     <?php endif; ?>
 
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon/favicon-16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/img/favicon/favicon-48.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon/favicon-512.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicon/apple-touch-icon.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap">

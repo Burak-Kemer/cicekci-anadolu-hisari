@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($pageTitle ?? 'Admin Panel'); ?> — <?php echo htmlspecialchars(SITE_NAME); ?></title>
     <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon/favicon-16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/img/favicon/favicon-48.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon/favicon-512.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicon/apple-touch-icon.png">
     <link rel="stylesheet" href="/assets/css/tokens.css">
     <link rel="stylesheet" href="/assets/css/admin.css">
 </head>
